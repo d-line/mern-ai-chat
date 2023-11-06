@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../models/User.js";
 import { hash, compare } from "bcrypt";
-import { createToken, setAuthCookie } from "../utils/tokens.js";
-import { COOKIE_NAME } from "../utils/constants.js";
+import { setAuthCookie } from "../utils/tokens.js";
 
 export const getAllUsers = async (
   _req: Request,
@@ -35,14 +34,12 @@ export const userSignup = async (
     const user = new User({ name, email, password: hashedPassword });
     await user.save();
     setAuthCookie(res, user);
-    return res
-      .status(201)
-      .json({
-        message: "OK",
-        id: user._id.toString(),
-        name: user.name,
-        email: user.email,
-      });
+    return res.status(201).json({
+      message: "OK",
+      id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "ERROR", cause: error });
@@ -89,17 +86,28 @@ export const userVerify = async (
   try {
     const user = await User.findById(res.locals.jwtData.id);
     if (!user) {
-      return res.status(401).json({message: 'ERROR', cause:'User not registered OR Token malfunctioned'});
+      return res
+        .status(401)
+        .json({
+          message: "ERROR",
+          cause: "User not registered OR Token malfunctioned",
+        });
     }
     if (user._id.toString() !== res.locals.jwtData.id) {
-      return res.status(401).json({message: 'ERROR', cause:'Permissions didn\'t match'});
+      return res
+        .status(401)
+        .json({ message: "ERROR", cause: "Permissions didn't match" });
     }
     return res
       .status(200)
-      .json({ message: "OK", id:user._id.toString(), name: user.name, email: user.email });
+      .json({
+        message: "OK",
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+      });
   } catch (error) {
     console.log(error);
     return res.status(200).json({ message: "ERROR", cause: error.message });
   }
 };
-
