@@ -1,12 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Exo+2&display=swap");
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
-  background: #05101C;
+  background: #05101c;
   color: white;
-  font-family: 'Merriweather', serif;
+  font-family: "Merriweather", serif;
 }
 
 .image-inverted {
@@ -28,4 +29,3 @@ html, body {
 .MuiOutlinedInput-notchedOutline {
   border-color: white !important;
 }
-
