@@ -36,9 +36,7 @@ export const userSignup = async (
     setAuthCookie(res, user);
     return res.status(201).json({
       message: "OK",
-      id: user._id.toString(),
-      name: user.name,
-      email: user.email,
+      id: user._id.toString()
     });
   } catch (error) {
     console.log(error);
